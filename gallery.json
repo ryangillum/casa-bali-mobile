@@ -59,12 +59,6 @@
       "file": "pool3.jpg"
     },
     {
-      "id": "pool2",
-      "category": "exterior",
-      "label": "Pool Pavilion",
-      "file": "pool2.jpg"
-    },
-    {
       "id": "pool_view",
       "category": "exterior",
       "label": "Pool & Ocean View",
