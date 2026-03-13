@@ -179,9 +179,10 @@ section{padding:120px 60px;}
 .detail-text{font-size:12px;color:var(--mid);font-weight:300;}
 .contact-form{display:flex;flex-direction:column;gap:16px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group{display:flex;flex-direction:column;gap:8px;min-width:0;}
 .form-group label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);}
-.form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--cream);padding:12px 16px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;transition:border-color 0.3s;outline:none;width:100%;}
+.form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--cream);padding:12px 16px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:300;transition:border-color 0.3s;outline:none;width:100%;min-width:0;}
+input[type="date"]{appearance:none;-webkit-appearance:none;}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);}
 .form-group textarea{height:120px;resize:vertical;}
 .form-group select option{background:var(--dark);}
