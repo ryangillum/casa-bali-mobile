@@ -683,7 +683,7 @@ document.getElementById('lightbox').addEventListener('touchend', e => {
   if(Math.abs(diff) > 50) lbNav(diff > 0 ? 1 : -1);
 });
 
-loadGallery();
+try { loadGallery(); } catch(e){ console.warn('Gallery init error:', e); }
 
 // ─── CALENDAR ───
 let BOOKED = [];
