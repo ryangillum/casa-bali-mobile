@@ -278,13 +278,15 @@ main { padding: 32px; max-width: 1400px; margin: 0 auto; }
     <!-- Upload zone -->
     <div id="upload-section">
       <h2>Add Photos</h2>
-      <input type="file" id="file-input" accept="image/*" multiple style="position:absolute;left:-9999px;opacity:0;">
       <div class="drop-zone" id="drop-zone">
         <span class="drop-zone-icon">📷</span>
         <div class="drop-zone-text">Drop photos here or click to browse</div>
         <div class="drop-zone-sub">JPEG, PNG, WebP · Multiple files supported</div>
       </div>
-      <label for="file-input" class="btn btn-primary" style="margin-top:16px;width:100%;padding:16px;font-size:13px;text-align:center;cursor:pointer;display:block;box-sizing:border-box;">📷 &nbsp;Choose Photos</label>
+      <label class="btn btn-primary" style="margin-top:16px;width:100%;padding:16px;font-size:13px;text-align:center;cursor:pointer;display:block;box-sizing:border-box;">
+        📷 &nbsp;Choose Photos
+        <input type="file" id="file-input" accept="image/*" multiple style="position:absolute;width:0;height:0;opacity:0;overflow:hidden;">
+      </label>
 
       <div id="upload-queue">
         <h3>New Photos — Set labels &amp; categories before uploading</h3>
@@ -652,7 +654,7 @@ const queue      = [];
 
 fileInput.addEventListener('change', e => { handleFiles(e.target.files); fileInput.value=''; });
 
-dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('click', () => fileInput.click()); // desktop fallback
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
 dropZone.addEventListener('drop', e => {
