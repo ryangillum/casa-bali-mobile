@@ -71,6 +71,12 @@
       "file": "pool_view.jpg"
     },
     {
+      "id": "balcony",
+      "category": "exterior",
+      "label": "Upper Balcony",
+      "file": "balcony.jpg"
+    },
+    {
       "id": "beach2",
       "category": "nature",
       "label": "Dominical Beach",
@@ -173,6 +179,12 @@
       "file": "img_8741_1773439037844.jpg"
     },
     {
+      "id": "pool_wine",
+      "category": "exterior",
+      "label": "Infinity Pool at Dusk",
+      "file": "pool_wine.jpg"
+    },
+    {
       "id": "img_8747_1773439036000",
       "category": "exterior",
       "label": "Lighted Stairway",
@@ -191,12 +203,6 @@
       "file": "terrace1.jpg"
     },
     {
-      "id": "balcony",
-      "category": "exterior",
-      "label": "Upper Balcony",
-      "file": "balcony.jpg"
-    },
-    {
       "id": "kitchen1",
       "category": "interior",
       "label": "Gourmet Kitchen",
@@ -207,12 +213,6 @@
       "category": "interior",
       "label": "Welcome Fruits",
       "file": "fruit.jpg"
-    },
-    {
-      "id": "gate",
-      "category": "exterior",
-      "label": "Garden Entrance",
-      "file": "gate.jpg"
     },
     {
       "id": "yoga",
@@ -231,12 +231,6 @@
       "category": "exterior",
       "label": "Pool at Sunset",
       "file": "pool_sunset.jpg"
-    },
-    {
-      "id": "pool_wine",
-      "category": "exterior",
-      "label": "Infinity Pool at Dusk",
-      "file": "pool_wine.jpg"
     },
     {
       "id": "playing_in_the_waves_1773437140651",
