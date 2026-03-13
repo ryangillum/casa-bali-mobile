@@ -204,6 +204,8 @@ main { padding: 32px; max-width: 1400px; margin: 0 auto; }
   header { flex-direction: column; align-items: flex-start; padding: 16px; }
   main { padding: 16px; }
   .config-grid { grid-template-columns: 1fr; }
+  #mobile-upload-btn { display: block !important; }
+  .drop-zone { padding: 32px 16px; }
 }
 </style>
 </head>
@@ -283,6 +285,7 @@ main { padding: 32px; max-width: 1400px; margin: 0 auto; }
         <div class="drop-zone-text">Drop photos here or click to browse</div>
         <div class="drop-zone-sub">JPEG, PNG, WebP · Multiple files supported</div>
       </div>
+      <button class="btn btn-primary" id="mobile-upload-btn" style="margin-top:16px;width:100%;padding:16px;font-size:13px;display:none;">Tap to Choose Photos</button>
 
       <div id="upload-queue">
         <h3>New Photos — Set labels &amp; categories before uploading</h3>
@@ -649,6 +652,7 @@ const dropZone   = document.getElementById('drop-zone');
 const queue      = [];
 
 fileInput.addEventListener('change', e => handleFiles(e.target.files));
+document.getElementById('mobile-upload-btn').addEventListener('click', () => fileInput.click());
 
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
