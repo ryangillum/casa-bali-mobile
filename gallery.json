@@ -23,6 +23,30 @@
   ],
   "photos": [
     {
+      "id": "living_ocean",
+      "category": "interior",
+      "label": "Living Room — Ocean View",
+      "file": "living_ocean.jpg"
+    },
+    {
+      "id": "aerial",
+      "category": "exterior",
+      "label": "Villa from Above",
+      "file": "aerial.jpg"
+    },
+    {
+      "id": "balcony2",
+      "category": "exterior",
+      "label": "Canopy Walk",
+      "file": "balcony2.jpg"
+    },
+    {
+      "id": "door",
+      "category": "exterior",
+      "label": "Villa Entry",
+      "file": "door.jpg"
+    },
+    {
       "id": "pool3",
       "category": "exterior",
       "label": "Infinity Pool",
@@ -41,12 +65,6 @@
       "file": "pool_view.jpg"
     },
     {
-      "id": "aerial",
-      "category": "exterior",
-      "label": "Villa from Above",
-      "file": "aerial.jpg"
-    },
-    {
       "id": "beach2",
       "category": "nature",
       "label": "Dominical Beach",
@@ -57,12 +75,6 @@
       "category": "interior",
       "label": "Open Plan Living",
       "file": "living4.jpg"
-    },
-    {
-      "id": "living_ocean",
-      "category": "interior",
-      "label": "Living Room — Ocean View",
-      "file": "living_ocean.jpg"
     },
     {
       "id": "living1",
@@ -131,12 +143,6 @@
       "file": "balcony.jpg"
     },
     {
-      "id": "balcony2",
-      "category": "exterior",
-      "label": "Canopy Walk",
-      "file": "balcony2.jpg"
-    },
-    {
       "id": "kitchen1",
       "category": "interior",
       "label": "Gourmet Kitchen",
@@ -165,12 +171,6 @@
       "category": "exterior",
       "label": "Garden Entrance",
       "file": "gate.jpg"
-    },
-    {
-      "id": "door",
-      "category": "exterior",
-      "label": "Villa Entry",
-      "file": "door.jpg"
     },
     {
       "id": "statue",
@@ -203,10 +203,10 @@
       "file": "pool_wine.jpg"
     },
     {
-      "id": "butterfly",
+      "id": "playing_in_the_waves_1773437140651",
       "category": "nature",
-      "label": "Blue Morpho Butterfly",
-      "file": "butterfly.jpg"
+      "label": "Playing in the Waves",
+      "file": "playing_in_the_waves_1773437140651.jpg"
     },
     {
       "id": "beach_sunset",
@@ -215,10 +215,10 @@
       "file": "beach_sunset.jpg"
     },
     {
-      "id": "playing_in_the_waves_1773437140651",
+      "id": "img_0248_1773439032829",
       "category": "nature",
-      "label": "Playing in the Waves",
-      "file": "playing_in_the_waves_1773437140651.jpg"
+      "label": "Dusk",
+      "file": "img_0248_1773439032829.jpg"
     },
     {
       "id": "1o7a0383_1773438824912",
@@ -227,51 +227,51 @@
       "file": "1o7a0383_1773438824912.jpg"
     },
     {
-      "id": "img_0248_1773439032829",
-      "category": "exterior",
-      "label": "IMG 0248",
-      "file": "img_0248_1773439032829.jpg"
+      "id": "butterfly",
+      "category": "nature",
+      "label": "Blue Morpho Butterfly",
+      "file": "butterfly.jpg"
     },
     {
       "id": "1o7a0548_1773439034567",
-      "category": "exterior",
-      "label": "1O7A0548",
+      "category": "nature",
+      "label": "Tangier",
       "file": "1o7a0548_1773439034567.jpg"
     },
     {
       "id": "img_8747_1773439036000",
       "category": "exterior",
-      "label": "IMG 8747",
+      "label": "Lighted Stairway",
       "file": "img_8747_1773439036000.jpg"
     },
     {
       "id": "img_8740_1773439037008",
-      "category": "exterior",
-      "label": "IMG 8740",
+      "category": "interior",
+      "label": "Downstairs TV Room",
       "file": "img_8740_1773439037008.jpg"
     },
     {
       "id": "img_8741_1773439037844",
-      "category": "exterior",
-      "label": "IMG 8741",
+      "category": "interior",
+      "label": "Downstairs TV Room",
       "file": "img_8741_1773439037844.jpg"
     },
     {
       "id": "img_8736_1773439038762",
-      "category": "exterior",
-      "label": "IMG 8736",
+      "category": "interior",
+      "label": "Ensuite Bathroom",
       "file": "img_8736_1773439038762.jpg"
     },
     {
       "id": "img_8737_1773439039587",
-      "category": "exterior",
-      "label": "IMG 8737",
+      "category": "interior",
+      "label": "Ensuite Bathroom",
       "file": "img_8737_1773439039587.jpg"
     },
     {
       "id": "img_8738_1773439040452",
-      "category": "exterior",
-      "label": "IMG 8738",
+      "category": "interior",
+      "label": "Modern Luxury Finishes",
       "file": "img_8738_1773439040452.jpg"
     },
     {
