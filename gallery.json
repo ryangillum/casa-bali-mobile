@@ -167,12 +167,6 @@
       "file": "img_8740_1773439037008.jpg"
     },
     {
-      "id": "img_8741_1773439037844",
-      "category": "interior",
-      "label": "Downstairs TV Room",
-      "file": "img_8741_1773439037844.jpg"
-    },
-    {
       "id": "pool_wine",
       "category": "exterior",
       "label": "Infinity Pool at Dusk",
@@ -264,7 +258,7 @@
     },
     {
       "id": "img_8866_1773439042553",
-      "category": "exterior",
+      "category": "nature",
       "label": "IMG 8866",
       "file": "img_8866_1773439042553.jpg"
     }
