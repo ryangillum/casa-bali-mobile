@@ -587,7 +587,7 @@ if(window.matchMedia('(min-width:901px)').matches){
 // ─── REVEAL ───
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.08 });
+}, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 // ─── GALLERY (loaded from gallery.json) ───
