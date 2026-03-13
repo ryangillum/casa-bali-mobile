@@ -686,15 +686,17 @@ const ICAL_URL = 'https://calendar.google.com/calendar/ical/ed3470dde5f7aa731041
 const WORKER   = 'https://casa-bali-calendar.ryangillum.workers.dev';
 
 async function loadCalendar(){
-  // Try the worker directly first, then fall back to passing the iCal URL as a parameter
+  // Try multiple routes in order — worker first, then public CORS proxies as fallback
   const endpoints = [
     WORKER,
     WORKER + '/?url=' + encodeURIComponent(ICAL_URL),
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(ICAL_URL),
+    'https://corsproxy.io/?' + encodeURIComponent(ICAL_URL),
   ];
   let loaded = false;
   for (const url of endpoints) {
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
       if (res.ok) {
         const text = await res.text();
         if (text.includes('BEGIN:VCALENDAR')) {
@@ -705,10 +707,10 @@ async function loadCalendar(){
         }
       }
     } catch(e) {
-      console.warn('Calendar endpoint failed:', url, e);
+      console.warn('Calendar endpoint failed:', url, e.message);
     }
   }
-  if (!loaded) console.warn('Could not load calendar from any endpoint.');
+  if (!loaded) console.warn('All calendar endpoints failed — showing empty calendar.');
   renderCalendar();
 }
 
