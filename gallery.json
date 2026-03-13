@@ -47,6 +47,12 @@
       "file": "door.jpg"
     },
     {
+      "id": "statue",
+      "category": "interior",
+      "label": "Artisan Décor",
+      "file": "statue.jpg"
+    },
+    {
       "id": "pool3",
       "category": "exterior",
       "label": "Infinity Pool",
@@ -95,10 +101,34 @@
       "file": "living6.jpg"
     },
     {
+      "id": "bathroom",
+      "category": "interior",
+      "label": "Guest Bath",
+      "file": "bathroom.jpg"
+    },
+    {
       "id": "bedroom1",
       "category": "bedroom",
       "label": "Master Suite",
       "file": "bedroom1.jpg"
+    },
+    {
+      "id": "img_8737_1773439039587",
+      "category": "interior",
+      "label": "Ensuite Bathroom",
+      "file": "img_8737_1773439039587.jpg"
+    },
+    {
+      "id": "img_8736_1773439038762",
+      "category": "interior",
+      "label": "Ensuite Bathroom",
+      "file": "img_8736_1773439038762.jpg"
+    },
+    {
+      "id": "img_8738_1773439040452",
+      "category": "interior",
+      "label": "Modern Luxury Finishes",
+      "file": "img_8738_1773439040452.jpg"
     },
     {
       "id": "bedroom3",
@@ -113,6 +143,12 @@
       "file": "bedroom2.jpg"
     },
     {
+      "id": "bathroom2",
+      "category": "interior",
+      "label": "Ensuite Bath",
+      "file": "bathroom2.jpg"
+    },
+    {
       "id": "pillow",
       "category": "bedroom",
       "label": "Luxury Details",
@@ -123,6 +159,24 @@
       "category": "bedroom",
       "label": "Suite View",
       "file": "bedroom4.jpg"
+    },
+    {
+      "id": "img_8740_1773439037008",
+      "category": "interior",
+      "label": "Downstairs TV Room",
+      "file": "img_8740_1773439037008.jpg"
+    },
+    {
+      "id": "img_8741_1773439037844",
+      "category": "interior",
+      "label": "Downstairs TV Room",
+      "file": "img_8741_1773439037844.jpg"
+    },
+    {
+      "id": "img_8747_1773439036000",
+      "category": "exterior",
+      "label": "Lighted Stairway",
+      "file": "img_8747_1773439036000.jpg"
     },
     {
       "id": "terrace2",
@@ -155,28 +209,10 @@
       "file": "fruit.jpg"
     },
     {
-      "id": "bathroom2",
-      "category": "interior",
-      "label": "Ensuite Bath",
-      "file": "bathroom2.jpg"
-    },
-    {
-      "id": "bathroom",
-      "category": "interior",
-      "label": "Guest Bath",
-      "file": "bathroom.jpg"
-    },
-    {
       "id": "gate",
       "category": "exterior",
       "label": "Garden Entrance",
       "file": "gate.jpg"
-    },
-    {
-      "id": "statue",
-      "category": "interior",
-      "label": "Artisan Décor",
-      "file": "statue.jpg"
     },
     {
       "id": "yoga",
@@ -237,42 +273,6 @@
       "category": "nature",
       "label": "Tangier",
       "file": "1o7a0548_1773439034567.jpg"
-    },
-    {
-      "id": "img_8747_1773439036000",
-      "category": "exterior",
-      "label": "Lighted Stairway",
-      "file": "img_8747_1773439036000.jpg"
-    },
-    {
-      "id": "img_8740_1773439037008",
-      "category": "interior",
-      "label": "Downstairs TV Room",
-      "file": "img_8740_1773439037008.jpg"
-    },
-    {
-      "id": "img_8741_1773439037844",
-      "category": "interior",
-      "label": "Downstairs TV Room",
-      "file": "img_8741_1773439037844.jpg"
-    },
-    {
-      "id": "img_8736_1773439038762",
-      "category": "interior",
-      "label": "Ensuite Bathroom",
-      "file": "img_8736_1773439038762.jpg"
-    },
-    {
-      "id": "img_8737_1773439039587",
-      "category": "interior",
-      "label": "Ensuite Bathroom",
-      "file": "img_8737_1773439039587.jpg"
-    },
-    {
-      "id": "img_8738_1773439040452",
-      "category": "interior",
-      "label": "Modern Luxury Finishes",
-      "file": "img_8738_1773439040452.jpg"
     },
     {
       "id": "img_0466_1773439041279",
