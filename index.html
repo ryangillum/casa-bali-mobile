@@ -12,8 +12,8 @@
   --dark:#1A1714; --charcoal:#2D2A26; --mid:#6B6560; --border:rgba(201,169,110,0.25);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Montserrat',sans-serif;background:var(--dark);color:var(--cream);overflow-x:hidden;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'Montserrat',sans-serif;background:var(--dark);color:var(--cream);overflow-x:hidden;position:relative;}
 
 /* ─── NAV ─── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:24px 60px;background:linear-gradient(to bottom,rgba(26,23,20,0.95),transparent);transition:background 0.4s;}
@@ -544,11 +544,13 @@ window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
 });
 
-// ─── HERO PARALLAX ───
-window.addEventListener('scroll', () => {
-  const bg = document.getElementById('hero-bg');
-  if (bg) bg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
-});
+// ─── HERO PARALLAX (desktop only — avoids horizontal drift on mobile) ───
+if(window.matchMedia('(min-width:901px)').matches){
+  window.addEventListener('scroll', () => {
+    const bg = document.getElementById('hero-bg');
+    if (bg) bg.style.transform = `translateY(${window.scrollY * 0.3}px)`;
+  }, { passive: true });
+}
 
 // ─── REVEAL ───
 const obs = new IntersectionObserver(entries => {
@@ -680,15 +682,33 @@ function parseIcalDates(text){
   return dates;
 }
 
+const ICAL_URL = 'https://calendar.google.com/calendar/ical/ed3470dde5f7aa731041d6911f4bdb1afa5e832a54639c0a483bcd5fc9202ac3%40group.calendar.google.com/public/basic.ics';
+const WORKER   = 'https://casa-bali-calendar.ryangillum.workers.dev';
+
 async function loadCalendar(){
-  try {
-    const res = await fetch('https://casa-bali-calendar.ryangillum.workers.dev');
-    const text = await res.text();
-    CHECKIN_DAYS = new Set(); CHECKOUT_DAYS = new Set();
-    BOOKED = parseIcalDates(text);
-  } catch(e) {
-    console.warn('Could not load calendar:', e);
+  // Try the worker directly first, then fall back to passing the iCal URL as a parameter
+  const endpoints = [
+    WORKER,
+    WORKER + '/?url=' + encodeURIComponent(ICAL_URL),
+  ];
+  let loaded = false;
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) {
+        const text = await res.text();
+        if (text.includes('BEGIN:VCALENDAR')) {
+          CHECKIN_DAYS = new Set(); CHECKOUT_DAYS = new Set();
+          BOOKED = parseIcalDates(text);
+          loaded = true;
+          break;
+        }
+      }
+    } catch(e) {
+      console.warn('Calendar endpoint failed:', url, e);
+    }
   }
+  if (!loaded) console.warn('Could not load calendar from any endpoint.');
   renderCalendar();
 }
 
