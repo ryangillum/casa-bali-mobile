@@ -318,7 +318,7 @@ main { padding: 32px; max-width: 1400px; margin: 0 auto; }
 //   await crypto.subtle.digest('SHA-256', new TextEncoder().encode('YourNewPassword'))
 //     .then(b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''))
 // Default password: CasaBali2025
-const ADMIN_PASSWORD_HASH = 'b2a03ea55c4ad5da8b49e3bf98cc55dae7db6a9e42a8a0a3d25e44d3a73fb6e3';
+const ADMIN_PASSWORD_HASH = 'e5ce8c24017c964261b47a47cdd3361c95df6524bd183387362a7389209bbd8e';
 
 async function hashPassword(pw){
   const enc = new TextEncoder().encode(pw);
