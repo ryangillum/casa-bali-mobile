@@ -6,6 +6,8 @@
 <title>Casa Bali — Dominicalito, Costa Rica</title>
 <meta name="description" content="Casa Bali — Luxury private villa in Dominicalito, Costa Rica. Infinity pool, ocean views, 2 bedrooms. Book your stay in paradise.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/themes/dark.min.css">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
 :root{
   --gold:#C9A96E; --gold-light:#E8D5B0; --cream:#FAF7F2;
@@ -260,6 +262,31 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:40p
   .hero-title{letter-spacing:4px;}
   .cal-day{font-size:10px;padding:6px 2px;}
 }
+
+/* ─── FLATPICKR OVERRIDES ─── */
+.flatpickr-calendar{background:var(--charcoal);border:1px solid var(--border);border-radius:0;box-shadow:0 8px 32px rgba(0,0,0,0.6);font-family:'Montserrat',sans-serif;z-index:9999!important;}
+.flatpickr-calendar.arrowTop:before,.flatpickr-calendar.arrowTop:after{border-bottom-color:var(--border);}
+.flatpickr-months{background:var(--charcoal);}
+.flatpickr-month{background:var(--charcoal);color:#fff;}
+.flatpickr-current-month{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:#fff;padding-top:8px;}
+.flatpickr-current-month .numInputWrapper{width:6ch;}
+.flatpickr-current-month input.cur-year{color:#fff!important;font-family:'Cormorant Garamond',serif;}
+.flatpickr-current-month .flatpickr-monthDropdown-months{background:var(--charcoal);color:#fff;font-family:'Cormorant Garamond',serif;font-size:16px;}
+.flatpickr-prev-month,.flatpickr-next-month{color:var(--gold)!important;fill:var(--gold)!important;}
+.flatpickr-prev-month:hover svg,.flatpickr-next-month:hover svg{fill:var(--gold-light)!important;}
+.flatpickr-weekdays{background:var(--charcoal);}
+span.flatpickr-weekday{background:var(--charcoal);color:var(--mid);font-size:9px;letter-spacing:2px;text-transform:uppercase;}
+.flatpickr-days{border-color:var(--border);}
+.dayContainer{border:none;}
+.flatpickr-day{color:var(--cream);border-radius:0;border:none;font-size:11px;font-family:'Montserrat',sans-serif;}
+.flatpickr-day:hover{background:rgba(201,169,110,0.15);border-color:transparent;color:var(--gold);}
+.flatpickr-day.selected,.flatpickr-day.selected:hover,.flatpickr-day.startRange,.flatpickr-day.endRange{background:var(--gold);border-color:var(--gold);color:var(--dark);}
+.flatpickr-day.today{border-color:var(--gold);color:var(--gold);}
+.flatpickr-day.today:hover{background:rgba(201,169,110,0.15);}
+.flatpickr-day.disabled,.flatpickr-day.disabled:hover,.flatpickr-day.prevMonthDay,.flatpickr-day.nextMonthDay{color:rgba(107,101,96,0.35);text-decoration:line-through;background:none;}
+.flatpickr-day.flatpickr-disabled,.flatpickr-day.flatpickr-disabled:hover{cursor:not-allowed;}
+.numInputWrapper span{border-color:var(--border);}
+.numInputWrapper span svg{fill:var(--gold);}
 </style>
 </head>
 <body>
@@ -503,14 +530,15 @@ footer{display:flex;justify-content:space-between;align-items:center;padding:40p
         </div>
         <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="your@email.com" required></div>
         <div class="form-row">
-          <div class="form-group"><label>Check-in Date</label><input type="date" id="checkin-input" name="checkin" required></div>
-          <div class="form-group"><label>Check-out Date</label><input type="date" id="checkout-input" name="checkout" required></div>
+          <div class="form-group"><label>Check-in Date</label><input type="text" id="checkin-input" name="checkin" placeholder="Select check-in date" required readonly></div>
+          <div class="form-group"><label>Check-out Date</label><input type="text" id="checkout-input" name="checkout" placeholder="Select check-out date" required readonly></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Number of Guests</label><select name="guests"><option>1–2 guests</option><option>3–4 guests</option></select></div>
           <div class="form-group"><label>Occasion</label><select name="occasion"><option>Surf & Adventure</option><option>Wellness Retreat</option><option>Romantic Escape</option><option>Family Vacation</option><option>Special Celebration</option></select></div>
         </div>
         <div class="form-group"><label>Message</label><textarea name="message" placeholder="Tell us about your ideal stay — dates, group size, any special requests..."></textarea></div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAACqRWpY8tSi0X5O6" data-theme="dark" style="margin-top:8px;"></div>
         <button type="submit" class="form-submit"><span>Send Inquiry</span></button>
         <div class="form-success" id="form-success"><span class="success-icon">✦</span>Request Received — Thank You<span class="success-sub">We'll be in touch within 24 hours to confirm your stay at Casa Bali.</span></div>
       </form>
@@ -713,6 +741,7 @@ async function loadCalendar(){
   }
   if (!loaded) console.warn('All calendar endpoints failed — showing empty calendar.');
   renderCalendar();
+  initDatePickers();
 }
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -787,11 +816,76 @@ function updateCalInfo(flag){
 function formatDate(ds){ const[y,m,d]=ds.split('-').map(Number); return MONTHS[m-1].slice(0,3)+' '+d+', '+y; }
 
 function populateForm(){
-  if(checkIn){ const ci=document.getElementById('checkin-input'), co=document.getElementById('checkout-input'); if(ci)ci.value=checkIn; if(co&&checkOut)co.value=checkOut; if(checkOut) setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),400); }
+  if(checkIn && checkinFp) checkinFp.setDate(checkIn, true);
+  if(checkOut && checkoutFp) checkoutFp.setDate(checkOut, true);
+  if(checkIn && checkOut) setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),400);
 }
 
 function changeMonth(dir){ viewMonth+=dir; if(viewMonth>11){viewMonth=0;viewYear++;} if(viewMonth<0){viewMonth=11;viewYear--;} renderCalendar(); }
 loadCalendar();
+
+// ─── DATE PICKERS ───
+let checkinFp = null, checkoutFp = null;
+
+function toDs(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function isCheckinDisabled(date){
+  const ds = toDs(date);
+  const today = new Date(); today.setHours(0,0,0,0);
+  if(date < today) return true;
+  // Block fully-booked interior days and checkin-only days (afternoon taken by arriving guests)
+  if(BOOKED.includes(ds) && !CHECKOUT_DAYS.has(ds)) return true;
+  return false;
+}
+
+function isCheckoutDisabled(date, ciDate){
+  if(!ciDate) return false;
+  const ds = toDs(date);
+  const minCo = new Date(ciDate); minCo.setDate(minCo.getDate()+3);
+  if(date < minCo) return true;
+  // Can't land on a fully-booked interior day
+  if(BOOKED.includes(ds) && !CHECKIN_DAYS.has(ds) && !CHECKOUT_DAYS.has(ds)) return true;
+  // Block if any fully-booked interior day lies strictly between check-in and this date
+  for(const b of BOOKED){
+    if(CHECKIN_DAYS.has(b) || CHECKOUT_DAYS.has(b)) continue;
+    const bd = parseDate(b);
+    if(bd > ciDate && bd < date) return true;
+  }
+  return false;
+}
+
+function initDatePickers(){
+  if(!window.flatpickr) return;
+  if(checkinFp) checkinFp.destroy();
+  if(checkoutFp) checkoutFp.destroy();
+  let selectedCheckin = null;
+
+  checkoutFp = flatpickr('#checkout-input',{
+    dateFormat:'Y-m-d',
+    altInput:true, altFormat:'M j, Y',
+    minDate:'today',
+    disableMobile:false,
+    disable:[date => isCheckoutDisabled(date, selectedCheckin)],
+  });
+
+  checkinFp = flatpickr('#checkin-input',{
+    dateFormat:'Y-m-d',
+    altInput:true, altFormat:'M j, Y',
+    minDate:'today',
+    disableMobile:false,
+    disable:[isCheckinDisabled],
+    onChange(selectedDates){
+      if(!selectedDates.length) return;
+      selectedCheckin = selectedDates[0];
+      const minCo = new Date(selectedCheckin); minCo.setDate(minCo.getDate()+3);
+      checkoutFp.set('minDate', minCo);
+      checkoutFp.set('disable', [date => isCheckoutDisabled(date, selectedCheckin)]);
+      checkoutFp.clear();
+      checkoutFp.jumpToDate(selectedCheckin);
+      checkoutFp.open();
+    }
+  });
+}
 
 // ─── FORM ───
 function submitForm(e){
@@ -799,8 +893,12 @@ function submitForm(e){
   const form=e.target, btn=form.querySelector('.form-submit');
   const required=form.querySelectorAll('[required]');
   for(let field of required){ if(!field.value.trim()){field.focus();field.style.borderColor='var(--gold)';return;} }
-  btn.innerHTML='<span>Sending...</span>'; btn.disabled=true;
   const data=new FormData(form);
+  if(!data.get('cf-turnstile-response')){
+    alert('Please complete the human verification before submitting.');
+    return;
+  }
+  btn.innerHTML='<span>Sending...</span>'; btn.disabled=true;
   fetch('https://formspree.io/f/mnjgvbzj',{method:'POST',body:data,headers:{'Accept':'application/json'}})
   .then(res=>res.json().then(json=>({ok:res.ok,json})))
   .then(result=>{
@@ -825,5 +923,6 @@ function submitForm(e){
   });
 }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
 </body>
 </html>
