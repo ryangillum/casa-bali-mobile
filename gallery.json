@@ -1,0 +1,218 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "label": "All Photos"
+    },
+    {
+      "id": "exterior",
+      "label": "Exterior & Pool"
+    },
+    {
+      "id": "interior",
+      "label": "Interiors"
+    },
+    {
+      "id": "bedroom",
+      "label": "Bedrooms"
+    },
+    {
+      "id": "nature",
+      "label": "Nature & Views"
+    }
+  ],
+  "photos": [
+    {
+      "id": "pool3",
+      "category": "exterior",
+      "label": "Infinity Pool",
+      "file": "pool3.jpg"
+    },
+    {
+      "id": "pool2",
+      "category": "exterior",
+      "label": "Pool Pavilion",
+      "file": "pool2.jpg"
+    },
+    {
+      "id": "pool_view",
+      "category": "exterior",
+      "label": "Pool & Ocean View",
+      "file": "pool_view.jpg"
+    },
+    {
+      "id": "aerial",
+      "category": "exterior",
+      "label": "Villa from Above",
+      "file": "aerial.jpg"
+    },
+    {
+      "id": "beach2",
+      "category": "nature",
+      "label": "Dominical Beach",
+      "file": "beach2.jpg"
+    },
+    {
+      "id": "living4",
+      "category": "interior",
+      "label": "Open Plan Living",
+      "file": "living4.jpg"
+    },
+    {
+      "id": "living_ocean",
+      "category": "interior",
+      "label": "Living Room — Ocean View",
+      "file": "living_ocean.jpg"
+    },
+    {
+      "id": "living1",
+      "category": "interior",
+      "label": "Living Room",
+      "file": "living1.jpg"
+    },
+    {
+      "id": "living3",
+      "category": "interior",
+      "label": "Jungle Light",
+      "file": "living3.jpg"
+    },
+    {
+      "id": "living6",
+      "category": "interior",
+      "label": "Kitchen Bar",
+      "file": "living6.jpg"
+    },
+    {
+      "id": "bedroom1",
+      "category": "bedroom",
+      "label": "Master Suite",
+      "file": "bedroom1.jpg"
+    },
+    {
+      "id": "bedroom3",
+      "category": "bedroom",
+      "label": "Bedroom — Ocean View",
+      "file": "bedroom3.jpg"
+    },
+    {
+      "id": "bedroom2",
+      "category": "bedroom",
+      "label": "Second Bedroom",
+      "file": "bedroom2.jpg"
+    },
+    {
+      "id": "pillow",
+      "category": "bedroom",
+      "label": "Luxury Details",
+      "file": "pillow.jpg"
+    },
+    {
+      "id": "bedroom4",
+      "category": "bedroom",
+      "label": "Suite View",
+      "file": "bedroom4.jpg"
+    },
+    {
+      "id": "terrace2",
+      "category": "exterior",
+      "label": "Terrace Dining",
+      "file": "terrace2.jpg"
+    },
+    {
+      "id": "terrace1",
+      "category": "exterior",
+      "label": "Covered Terrace",
+      "file": "terrace1.jpg"
+    },
+    {
+      "id": "balcony",
+      "category": "exterior",
+      "label": "Upper Balcony",
+      "file": "balcony.jpg"
+    },
+    {
+      "id": "balcony2",
+      "category": "exterior",
+      "label": "Canopy Walk",
+      "file": "balcony2.jpg"
+    },
+    {
+      "id": "kitchen1",
+      "category": "interior",
+      "label": "Gourmet Kitchen",
+      "file": "kitchen1.jpg"
+    },
+    {
+      "id": "fruit",
+      "category": "interior",
+      "label": "Welcome Fruits",
+      "file": "fruit.jpg"
+    },
+    {
+      "id": "bathroom2",
+      "category": "interior",
+      "label": "Ensuite Bath",
+      "file": "bathroom2.jpg"
+    },
+    {
+      "id": "bathroom",
+      "category": "interior",
+      "label": "Guest Bath",
+      "file": "bathroom.jpg"
+    },
+    {
+      "id": "gate",
+      "category": "exterior",
+      "label": "Garden Entrance",
+      "file": "gate.jpg"
+    },
+    {
+      "id": "door",
+      "category": "exterior",
+      "label": "Villa Entry",
+      "file": "door.jpg"
+    },
+    {
+      "id": "statue",
+      "category": "interior",
+      "label": "Artisan Décor",
+      "file": "statue.jpg"
+    },
+    {
+      "id": "yoga",
+      "category": "nature",
+      "label": "Jungle Yoga",
+      "file": "yoga.jpg"
+    },
+    {
+      "id": "beach",
+      "category": "nature",
+      "label": "Pacific Coastline",
+      "file": "beach.jpg"
+    },
+    {
+      "id": "pool_sunset",
+      "category": "exterior",
+      "label": "Pool at Sunset",
+      "file": "pool_sunset.jpg"
+    },
+    {
+      "id": "pool_wine",
+      "category": "exterior",
+      "label": "Infinity Pool at Dusk",
+      "file": "pool_wine.jpg"
+    },
+    {
+      "id": "butterfly",
+      "category": "nature",
+      "label": "Blue Morpho Butterfly",
+      "file": "butterfly.jpg"
+    },
+    {
+      "id": "beach_sunset",
+      "category": "nature",
+      "label": "Dominicalito Beach Sunset",
+      "file": "beach_sunset.jpg"
+    }
+  ]
+}

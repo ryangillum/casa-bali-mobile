@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Bali — Gallery Admin</title>
+<style>
+:root {
+  --gold: #C9A96E;
+  --dark: #1A1714;
+  --charcoal: #2D2A26;
+  --cream: #FAF7F2;
+  --mid: #6B6560;
+  --border: rgba(201,169,110,0.25);
+  --red: #c0392b;
+  --green: #27ae60;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--dark); color: var(--cream); min-height: 100vh; }
+
+/* ─── LOGIN ─── */
+#login-screen {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: 100vh; padding: 24px;
+}
+#login-screen h1 { font-size: 28px; font-weight: 300; letter-spacing: 4px; color: var(--gold); margin-bottom: 8px; }
+#login-screen p { font-size: 12px; color: var(--mid); margin-bottom: 40px; letter-spacing: 1px; }
+.login-form { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 380px; }
+.login-form input {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--cream); padding: 14px 16px; font-size: 13px; outline: none;
+  transition: border-color 0.3s;
+}
+.login-form input:focus { border-color: var(--gold); }
+.login-btn {
+  background: none; border: 1px solid var(--gold); color: var(--gold);
+  padding: 14px; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s;
+}
+.login-btn:hover { background: var(--gold); color: var(--dark); }
+.login-error { color: #e07060; font-size: 12px; text-align: center; display: none; }
+
+/* ─── MAIN UI ─── */
+#admin-ui { display: none; }
+
+header {
+  background: var(--charcoal); border-bottom: 1px solid var(--border);
+  padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  position: sticky; top: 0; z-index: 100;
+}
+header h1 { font-size: 16px; font-weight: 400; letter-spacing: 3px; color: var(--gold); }
+.header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.btn {
+  border: 1px solid var(--border); background: none; color: var(--cream);
+  padding: 8px 20px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; font-family: inherit; white-space: nowrap;
+}
+.btn:hover { border-color: var(--gold); color: var(--gold); }
+.btn-primary { border-color: var(--gold); color: var(--gold); }
+.btn-primary:hover { background: var(--gold); color: var(--dark); }
+.btn-danger:hover { border-color: var(--red); color: var(--red); }
+.btn-logout { font-size: 10px; color: var(--mid); }
+.btn-logout:hover { color: var(--cream); border-color: var(--mid); }
+
+#status-bar {
+  padding: 10px 32px; font-size: 11px; letter-spacing: 1px;
+  display: none; border-bottom: 1px solid var(--border);
+}
+#status-bar.success { background: rgba(39,174,96,0.1); color: var(--green); display: block; }
+#status-bar.error   { background: rgba(192,57,43,0.1); color: #e07060; display: block; }
+#status-bar.info    { background: rgba(201,169,110,0.08); color: var(--gold); display: block; }
+
+main { padding: 32px; max-width: 1400px; margin: 0 auto; }
+
+/* ─── CONFIG PANEL ─── */
+#config-panel {
+  background: var(--charcoal); border: 1px solid var(--border);
+  padding: 24px; margin-bottom: 32px; display: none;
+}
+#config-panel h2 { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.config-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.config-field { display: flex; flex-direction: column; gap: 6px; }
+.config-field label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); }
+.config-field input {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--cream); padding: 10px 12px; font-size: 12px; outline: none;
+  transition: border-color 0.3s; font-family: inherit; width: 100%;
+}
+.config-field input:focus { border-color: var(--gold); }
+.config-field input[type="password"] { letter-spacing: 2px; }
+.config-note { font-size: 11px; color: var(--mid); line-height: 1.6; margin-top: 12px; grid-column: 1/-1; }
+.config-note a { color: var(--gold); }
+
+/* ─── UPLOAD ZONE ─── */
+#upload-section { margin-bottom: 32px; }
+#upload-section h2 { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--mid); margin-bottom: 16px; }
+
+.drop-zone {
+  border: 2px dashed var(--border); padding: 48px 32px;
+  text-align: center; cursor: pointer; transition: all 0.3s; position: relative;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--gold); background: rgba(201,169,110,0.05);
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.drop-zone-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.drop-zone-text { font-size: 13px; color: var(--mid); }
+.drop-zone-sub { font-size: 11px; color: var(--mid); opacity: 0.6; margin-top: 6px; }
+
+/* ─── UPLOAD QUEUE ─── */
+#upload-queue { display: none; margin-top: 24px; }
+#upload-queue h3 { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin-bottom: 16px; }
+.queue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.queue-item {
+  background: var(--charcoal); border: 1px solid var(--border); padding: 12px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.queue-item img { width: 100%; height: 140px; object-fit: cover; display: block; }
+.queue-item input, .queue-item select {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--cream); padding: 6px 10px; font-size: 11px; outline: none;
+  font-family: inherit; width: 100%;
+}
+.queue-item input:focus, .queue-item select:focus { border-color: var(--gold); }
+.queue-item .remove-btn {
+  background: none; border: 1px solid rgba(192,57,43,0.3); color: #e07060;
+  padding: 5px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; font-family: inherit;
+}
+.queue-item .remove-btn:hover { border-color: var(--red); background: rgba(192,57,43,0.1); }
+.upload-all-btn { margin-top: 16px; }
+
+/* ─── GALLERY GRID ─── */
+#gallery-section h2 { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
+.gallery-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+.filter-btn {
+  background: none; border: 1px solid var(--border); color: var(--mid);
+  padding: 6px 14px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; font-family: inherit;
+}
+.filter-btn.active, .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+.gallery-count { font-size: 11px; color: var(--mid); margin-left: auto; }
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+.admin-card {
+  background: var(--charcoal); border: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 0;
+  transition: border-color 0.3s; position: relative;
+  cursor: grab;
+}
+.admin-card:active { cursor: grabbing; }
+.admin-card.dragging { opacity: 0.4; border-color: var(--gold); }
+.admin-card.drag-over { border-color: var(--gold); border-style: dashed; }
+.admin-card img { width: 100%; height: 160px; object-fit: cover; display: block; pointer-events: none; }
+.card-body { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.card-label input {
+  width: 100%; background: none; border: none; border-bottom: 1px solid var(--border);
+  color: var(--cream); font-size: 11px; padding: 3px 0; outline: none;
+  font-family: inherit; transition: border-color 0.3s;
+}
+.card-label input:focus { border-bottom-color: var(--gold); }
+.card-cat select {
+  width: 100%; background: var(--charcoal); border: 1px solid var(--border);
+  color: var(--mid); font-size: 10px; padding: 4px 6px; outline: none;
+  font-family: inherit; cursor: pointer;
+}
+.card-cat select:focus { border-color: var(--gold); }
+.card-actions { display: flex; gap: 6px; padding: 8px 12px; border-top: 1px solid var(--border); }
+.card-del {
+  flex: 1; background: none; border: 1px solid rgba(192,57,43,0.2); color: #e07060;
+  padding: 5px; font-size: 9px; letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; font-family: inherit;
+}
+.card-del:hover { border-color: var(--red); background: rgba(192,57,43,0.1); }
+.drag-handle {
+  position: absolute; top: 6px; right: 6px; color: rgba(255,255,255,0.3);
+  font-size: 14px; pointer-events: none; background: rgba(26,23,20,0.5);
+  padding: 2px 5px; border-radius: 2px;
+}
+
+/* ─── SPINNER ─── */
+.spinner {
+  display: inline-block; width: 14px; height: 14px;
+  border: 2px solid var(--border); border-top-color: var(--gold);
+  border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── INSTRUCTIONS ─── */
+.instructions {
+  background: rgba(201,169,110,0.06); border: 1px solid var(--border);
+  padding: 20px 24px; margin-bottom: 32px; font-size: 12px; line-height: 1.8; color: var(--mid);
+}
+.instructions h3 { color: var(--gold); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.instructions code { background: rgba(255,255,255,0.06); padding: 1px 6px; font-size: 11px; color: var(--cream); }
+
+@media(max-width:600px){
+  header { flex-direction: column; align-items: flex-start; padding: 16px; }
+  main { padding: 16px; }
+  .config-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── LOGIN ─── -->
+<div id="login-screen">
+  <h1>CASA BALI</h1>
+  <p>Gallery Admin Panel</p>
+  <div class="login-form">
+    <input type="password" id="pw-input" placeholder="Enter admin password" autocomplete="current-password">
+    <button class="login-btn" onclick="tryLogin()">Sign In</button>
+    <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- ─── ADMIN UI ─── -->
+<div id="admin-ui">
+  <header>
+    <h1>CASA BALI — Gallery Manager</h1>
+    <div class="header-actions">
+      <a href="../" target="_blank" class="btn">View Live Site</a>
+      <button class="btn" onclick="toggleConfig()">⚙ Settings</button>
+      <button class="btn btn-primary" id="save-btn" onclick="saveGallery()">Save Changes</button>
+      <button class="btn btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </header>
+
+  <div id="status-bar"></div>
+
+  <main>
+    <!-- Settings panel -->
+    <div id="config-panel">
+      <h2>GitHub Settings</h2>
+      <div class="config-grid">
+        <div class="config-field">
+          <label>GitHub Username</label>
+          <input type="text" id="cfg-owner" placeholder="e.g. ryangillum">
+        </div>
+        <div class="config-field">
+          <label>Repository Name</label>
+          <input type="text" id="cfg-repo" placeholder="e.g. casa-bali">
+        </div>
+        <div class="config-field">
+          <label>Branch</label>
+          <input type="text" id="cfg-branch" placeholder="main">
+        </div>
+        <div class="config-field">
+          <label>Personal Access Token</label>
+          <input type="password" id="cfg-token" placeholder="ghp_xxxxxxxxxxxxxxxx">
+        </div>
+        <div class="config-note">
+          Your token needs <code>Contents: Read &amp; Write</code> permission.
+          <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create one here →</a>
+          Settings are saved in your browser only — never sent anywhere except GitHub.
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:16px;">
+        <button class="btn btn-primary" onclick="saveConfig()">Save Settings</button>
+        <button class="btn" onclick="testConnection()">Test Connection</button>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions" id="instructions">
+      <h3>First-time setup</h3>
+      Click <strong>⚙ Settings</strong> to enter your GitHub username, repository name, and Personal Access Token.
+      Once connected, you can upload new photos, reorder them by dragging, rename captions, change categories, and click <strong>Save Changes</strong> to publish instantly.
+    </div>
+
+    <!-- Upload zone -->
+    <div id="upload-section">
+      <h2>Add Photos</h2>
+      <div class="drop-zone" id="drop-zone">
+        <input type="file" id="file-input" accept="image/*" multiple>
+        <span class="drop-zone-icon">📷</span>
+        <div class="drop-zone-text">Drop photos here or click to browse</div>
+        <div class="drop-zone-sub">JPEG, PNG, WebP · Multiple files supported</div>
+      </div>
+
+      <div id="upload-queue">
+        <h3>New Photos — Set labels &amp; categories before uploading</h3>
+        <div class="queue-grid" id="queue-grid"></div>
+        <button class="btn btn-primary upload-all-btn" id="upload-all-btn" onclick="uploadAll()">
+          Upload All to Gallery
+        </button>
+      </div>
+    </div>
+
+    <!-- Gallery grid -->
+    <div id="gallery-section">
+      <h2>Current Gallery</h2>
+      <div class="gallery-filter-bar">
+        <button class="filter-btn active" onclick="filterAdmin('all',this)">All</button>
+        <button class="filter-btn" onclick="filterAdmin('exterior',this)">Exterior</button>
+        <button class="filter-btn" onclick="filterAdmin('interior',this)">Interiors</button>
+        <button class="filter-btn" onclick="filterAdmin('bedroom',this)">Bedrooms</button>
+        <button class="filter-btn" onclick="filterAdmin('nature',this)">Nature</button>
+        <span class="gallery-count" id="gallery-count"></span>
+      </div>
+      <div class="admin-grid" id="admin-grid">
+        <div style="color:var(--mid);font-size:12px;padding:40px;grid-column:1/-1;">Loading gallery…</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ─── PASSWORD ───
+// Change ADMIN_PASSWORD_HASH to control access.
+// To generate: open browser console, type:
+//   await crypto.subtle.digest('SHA-256', new TextEncoder().encode('YourNewPassword'))
+//     .then(b => [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''))
+// Default password: CasaBali2025
+const ADMIN_PASSWORD_HASH = 'b2a03ea55c4ad5da8b49e3bf98cc55dae7db6a9e42a8a0a3d25e44d3a73fb6e3';
+
+async function hashPassword(pw){
+  const enc = new TextEncoder().encode(pw);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return [...new Uint8Array(buf)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+async function tryLogin(){
+  const pw = document.getElementById('pw-input').value;
+  if(!pw) return;
+  const hash = await hashPassword(pw);
+  if(hash === ADMIN_PASSWORD_HASH){
+    sessionStorage.setItem('cb_auth', '1');
+    showAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if(e.key==='Enter') tryLogin(); });
+
+function logout(){
+  sessionStorage.removeItem('cb_auth');
+  location.reload();
+}
+
+function showAdmin(){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-ui').style.display = 'block';
+  loadConfig();
+  loadGallery();
+}
+
+if(sessionStorage.getItem('cb_auth') === '1') showAdmin();
+
+// ─── CONFIG ───
+function loadConfig(){
+  document.getElementById('cfg-owner').value  = localStorage.getItem('cb_owner')  || 'ryangillum';
+  document.getElementById('cfg-repo').value   = localStorage.getItem('cb_repo')   || 'casa-bali';
+  document.getElementById('cfg-branch').value = localStorage.getItem('cb_branch') || 'main';
+  document.getElementById('cfg-token').value  = localStorage.getItem('cb_token')  || '';
+  updateInstructions();
+}
+
+function saveConfig(){
+  localStorage.setItem('cb_owner',  document.getElementById('cfg-owner').value.trim());
+  localStorage.setItem('cb_repo',   document.getElementById('cfg-repo').value.trim());
+  localStorage.setItem('cb_branch', document.getElementById('cfg-branch').value.trim() || 'main');
+  localStorage.setItem('cb_token',  document.getElementById('cfg-token').value.trim());
+  setStatus('Settings saved!', 'success');
+  updateInstructions();
+}
+
+function getConfig(){
+  return {
+    owner:  localStorage.getItem('cb_owner')  || '',
+    repo:   localStorage.getItem('cb_repo')   || '',
+    branch: localStorage.getItem('cb_branch') || 'main',
+    token:  localStorage.getItem('cb_token')  || '',
+  };
+}
+
+function updateInstructions(){
+  const {owner, token} = getConfig();
+  if(owner && token){
+    document.getElementById('instructions').style.display = 'none';
+  }
+}
+
+function toggleConfig(){
+  const panel = document.getElementById('config-panel');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+}
+
+async function testConnection(){
+  const {owner, repo, branch, token} = getConfig();
+  if(!token){ setStatus('Please enter a GitHub token first.', 'error'); return; }
+  setStatus('Testing connection…', 'info');
+  try {
+    const res = await ghGet(`repos/${owner}/${repo}/branches/${branch}`);
+    if(res.name) setStatus(`✓ Connected to ${owner}/${repo} (branch: ${branch})`, 'success');
+    else setStatus('Connection failed — check username, repo, and token.', 'error');
+  } catch(e) {
+    setStatus('Connection failed: ' + e.message, 'error');
+  }
+}
+
+// ─── GITHUB API ───
+function apiBase(){ return 'https://api.github.com'; }
+
+async function ghGet(path){
+  const {token} = getConfig();
+  const res = await fetch(`${apiBase()}/${path}`, {
+    headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+  });
+  if(!res.ok) throw new Error(`GitHub API error ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+async function ghPut(path, body){
+  const {token} = getConfig();
+  const res = await fetch(`${apiBase()}/${path}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok) throw new Error(`GitHub API error ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+async function getFileSHA(path){
+  const {owner, repo, branch} = getConfig();
+  try {
+    const data = await ghGet(`repos/${owner}/${repo}/contents/${path}?ref=${branch}`);
+    return data.sha;
+  } catch(e) {
+    return null; // file doesn't exist yet
+  }
+}
+
+async function pushFile(repoPath, base64Content, commitMsg){
+  const {owner, repo, branch} = getConfig();
+  const sha = await getFileSHA(repoPath);
+  const body = {
+    message: commitMsg,
+    content: base64Content,
+    branch: branch,
+  };
+  if(sha) body.sha = sha;
+  return ghPut(`repos/${owner}/${repo}/contents/${repoPath}`, body);
+}
+
+async function deleteFile(repoPath, sha, commitMsg){
+  const {owner, repo, branch, token} = getConfig();
+  const res = await fetch(`${apiBase()}/repos/${owner}/${repo}/contents/${repoPath}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `token ${token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ message: commitMsg, sha, branch })
+  });
+  if(!res.ok) throw new Error(`GitHub API error ${res.status}: ${await res.text()}`);
+  return res.json();
+}
+
+// ─── STATUS BAR ───
+let statusTimer;
+function setStatus(msg, type='info'){
+  const bar = document.getElementById('status-bar');
+  bar.textContent = msg;
+  bar.className = type;
+  clearTimeout(statusTimer);
+  if(type !== 'info') statusTimer = setTimeout(() => bar.className = '', 5000);
+}
+
+// ─── GALLERY DATA ───
+let galleryData = { categories: [], photos: [] };
+let currentFilter = 'all';
+
+async function loadGallery(){
+  try {
+    const res = await fetch('../gallery.json?nocache=' + Date.now());
+    galleryData = await res.json();
+  } catch(e) {
+    // gallery.json not found — start with default structure
+    galleryData = {
+      categories: [
+        {id:'all',label:'All Photos'},
+        {id:'exterior',label:'Exterior & Pool'},
+        {id:'interior',label:'Interiors'},
+        {id:'bedroom',label:'Bedrooms'},
+        {id:'nature',label:'Nature & Views'}
+      ],
+      photos: []
+    };
+  }
+  renderAdminGrid();
+}
+
+function renderAdminGrid(){
+  const grid = document.getElementById('admin-grid');
+  const photos = currentFilter === 'all'
+    ? galleryData.photos
+    : galleryData.photos.filter(p => p.category === currentFilter);
+
+  document.getElementById('gallery-count').textContent = `${photos.length} photo${photos.length !== 1 ? 's' : ''}`;
+
+  if(photos.length === 0){
+    grid.innerHTML = '<div style="color:var(--mid);font-size:12px;padding:40px;grid-column:1/-1;">No photos yet. Upload some above!</div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  photos.forEach(photo => {
+    const card = createCard(photo);
+    grid.appendChild(card);
+  });
+
+  initDragDrop();
+}
+
+function createCard(photo){
+  const div = document.createElement('div');
+  div.className = 'admin-card';
+  div.dataset.id = photo.id;
+  div.draggable = true;
+  div.innerHTML = `
+    <div class="drag-handle">⠿</div>
+    <img src="../images/gallery/${photo.file}?v=${Date.now()}" alt="${photo.label}" loading="lazy">
+    <div class="card-body">
+      <div class="card-label">
+        <input type="text" value="${photo.label}" placeholder="Caption" onchange="updatePhoto('${photo.id}','label',this.value)">
+      </div>
+      <div class="card-cat">
+        <select onchange="updatePhoto('${photo.id}','category',this.value)">
+          <option value="exterior" ${photo.category==='exterior'?'selected':''}>Exterior &amp; Pool</option>
+          <option value="interior" ${photo.category==='interior'?'selected':''}>Interiors</option>
+          <option value="bedroom"  ${photo.category==='bedroom'?'selected':''}>Bedrooms</option>
+          <option value="nature"   ${photo.category==='nature'?'selected':''}>Nature &amp; Views</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-actions">
+      <button class="card-del" onclick="deletePhoto('${photo.id}','${photo.file}')">🗑 Delete</button>
+    </div>
+  `;
+  return div;
+}
+
+function updatePhoto(id, field, value){
+  const photo = galleryData.photos.find(p => p.id === id);
+  if(photo) photo[field] = value;
+}
+
+async function deletePhoto(id, file){
+  if(!confirm(`Delete "${file}" from the gallery? This cannot be undone.`)) return;
+  const {owner, repo, branch} = getConfig();
+  if(!owner || !repo || !getConfig().token){
+    // Just remove locally if no GitHub config
+    galleryData.photos = galleryData.photos.filter(p => p.id !== id);
+    renderAdminGrid();
+    setStatus('Photo removed locally. Click Save Changes to publish.', 'info');
+    return;
+  }
+  setStatus('Deleting photo…', 'info');
+  try {
+    // Delete the image file from GitHub
+    const sha = await getFileSHA(`images/gallery/${file}`);
+    if(sha) await deleteFile(`images/gallery/${file}`, sha, `Remove photo: ${file}`);
+    // Remove from galleryData
+    galleryData.photos = galleryData.photos.filter(p => p.id !== id);
+    // Save updated gallery.json
+    await pushGalleryJson();
+    renderAdminGrid();
+    setStatus(`✓ "${file}" deleted and gallery updated.`, 'success');
+  } catch(e) {
+    setStatus('Delete failed: ' + e.message, 'error');
+  }
+}
+
+function filterAdmin(cat, btn){
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAdminGrid();
+}
+
+// ─── DRAG & DROP REORDER ───
+let dragSrc = null;
+
+function initDragDrop(){
+  document.querySelectorAll('.admin-card').forEach(card => {
+    card.addEventListener('dragstart', e => {
+      dragSrc = card;
+      setTimeout(() => card.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('dragging');
+      document.querySelectorAll('.admin-card').forEach(c => c.classList.remove('drag-over'));
+      syncOrderFromDOM();
+    });
+    card.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if(card !== dragSrc){
+        document.querySelectorAll('.admin-card').forEach(c => c.classList.remove('drag-over'));
+        card.classList.add('drag-over');
+      }
+    });
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      if(dragSrc && dragSrc !== card){
+        const grid = document.getElementById('admin-grid');
+        const cards = [...grid.querySelectorAll('.admin-card')];
+        const srcIdx = cards.indexOf(dragSrc);
+        const tgtIdx = cards.indexOf(card);
+        if(srcIdx < tgtIdx) card.after(dragSrc);
+        else card.before(dragSrc);
+      }
+    });
+  });
+}
+
+function syncOrderFromDOM(){
+  const cards = [...document.querySelectorAll('#admin-grid .admin-card')];
+  const ids = cards.map(c => c.dataset.id);
+  if(currentFilter === 'all'){
+    galleryData.photos = ids.map(id => galleryData.photos.find(p => p.id === id)).filter(Boolean);
+  } else {
+    // Reorder only the filtered subset; keep others in place
+    const filtered = ids.map(id => galleryData.photos.find(p => p.id === id)).filter(Boolean);
+    const others = galleryData.photos.filter(p => p.category !== currentFilter);
+    // Rebuild: insert filtered photos at their original positions
+    galleryData.photos = [...filtered, ...others];
+  }
+}
+
+// ─── UPLOAD ───
+const fileInput  = document.getElementById('file-input');
+const dropZone   = document.getElementById('drop-zone');
+const queue      = [];
+
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  handleFiles(e.dataTransfer.files);
+});
+
+function handleFiles(files){
+  [...files].forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const item = {
+        file,
+        dataUrl: e.target.result,
+        label: file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '),
+        category: 'exterior'
+      };
+      queue.push(item);
+      renderQueue();
+    };
+    reader.readAsDataURL(file);
+  });
+  fileInput.value = '';
+}
+
+function renderQueue(){
+  const el = document.getElementById('upload-queue');
+  const grid = document.getElementById('queue-grid');
+  if(queue.length === 0){ el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  grid.innerHTML = '';
+  queue.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'queue-item';
+    div.innerHTML = `
+      <img src="${item.dataUrl}" alt="">
+      <input type="text" value="${item.label}" placeholder="Caption" oninput="queue[${i}].label=this.value">
+      <select onchange="queue[${i}].category=this.value">
+        <option value="exterior">Exterior &amp; Pool</option>
+        <option value="interior">Interiors</option>
+        <option value="bedroom">Bedrooms</option>
+        <option value="nature">Nature &amp; Views</option>
+      </select>
+      <button class="remove-btn" onclick="removeFromQueue(${i})">Remove</button>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+function removeFromQueue(i){
+  queue.splice(i, 1);
+  renderQueue();
+}
+
+async function uploadAll(){
+  if(queue.length === 0) return;
+  const {owner, repo, token} = getConfig();
+  if(!owner || !repo || !token){
+    setStatus('Please configure GitHub settings first (⚙ Settings).', 'error');
+    toggleConfig();
+    return;
+  }
+
+  const btn = document.getElementById('upload-all-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Uploading…';
+
+  let uploaded = 0;
+  for(const item of queue){
+    try {
+      // Generate unique ID
+      const id = item.label.toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'') + '_' + Date.now();
+      const ext = item.file.name.split('.').pop().toLowerCase().replace('jpeg','jpg');
+      const filename = `${id}.${ext}`;
+      const repoPath = `images/gallery/${filename}`;
+
+      // Convert dataUrl to base64 content
+      const base64 = item.dataUrl.split(',')[1];
+
+      setStatus(`Uploading ${uploaded+1}/${queue.length}: ${filename}…`, 'info');
+      await pushFile(repoPath, base64, `Add gallery photo: ${filename}`);
+
+      // Add to galleryData
+      galleryData.photos.push({ id, category: item.category, label: item.label, file: filename });
+      uploaded++;
+    } catch(e) {
+      setStatus(`Failed to upload "${item.file.name}": ${e.message}`, 'error');
+    }
+  }
+
+  if(uploaded > 0){
+    // Save gallery.json
+    await pushGalleryJson();
+    queue.length = 0;
+    renderQueue();
+    renderAdminGrid();
+    setStatus(`✓ ${uploaded} photo${uploaded>1?'s':''} uploaded and gallery updated!`, 'success');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Upload All to Gallery';
+}
+
+// ─── SAVE GALLERY JSON ───
+async function saveGallery(){
+  const {owner, repo, token} = getConfig();
+  if(!owner || !repo || !token){
+    setStatus('Please configure GitHub settings first (⚙ Settings).', 'error');
+    toggleConfig();
+    return;
+  }
+  const btn = document.getElementById('save-btn');
+  const orig = btn.textContent;
+  btn.textContent = 'Saving…'; btn.disabled = true;
+  // Sync order from DOM first
+  syncOrderFromDOM();
+  try {
+    await pushGalleryJson();
+    setStatus('✓ Gallery saved! Changes will be live in ~1 minute.', 'success');
+  } catch(e) {
+    setStatus('Save failed: ' + e.message, 'error');
+  }
+  btn.textContent = orig; btn.disabled = false;
+}
+
+async function pushGalleryJson(){
+  const json = JSON.stringify(galleryData, null, 2);
+  const base64 = btoa(unescape(encodeURIComponent(json)));
+  await pushFile('gallery.json', base64, 'Update gallery.json via admin panel');
+}
+</script>
+</body>
+</html>
