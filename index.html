@@ -345,7 +345,7 @@ span.flatpickr-weekday{background:var(--charcoal);color:var(--mid);font-size:9px
         Perched above the Pacific, Casa Bali is a private sanctuary nestled in the Costa Rican
         rainforest canopy — just minutes from the legendary surf breaks of Dominical. Watch humpback
         whales breach from your morning coffee perch. Fall asleep to howler monkeys and tree frogs.
-        Wake to toucans, hummingbirds, and the glittering ocean below. This is Pura Vida, elevated.
+        Wake to toucans, hummingbirds, and the glittering ocean below. This is Puravida, elevated.
       </p>
       <div class="stats-row">
         <div class="stat"><div class="stat-num">2</div><div class="stat-label">Bedrooms</div></div>
@@ -441,7 +441,7 @@ span.flatpickr-weekday{background:var(--charcoal);color:var(--mid);font-size:9px
       <div class="loc-item"><div class="loc-num">5'</div><div class="loc-text"><h4>Walk to Beach, Yoga & Restaurants</h4><p>Stroll to Dominicalito Beach — a quiet crescent bay perfect for swimming and relaxing.</p></div></div>
       <div class="loc-item"><div class="loc-num">5'</div><div class="loc-text"><h4>Drive to Dominical</h4><p>The charming surf village offers supermarkets, pharmacies, bars, and world-renowned wave breaks.</p></div></div>
       <div class="loc-item"><div class="loc-num">12'</div><div class="loc-text"><h4>Drive to Uvita</h4><p>Home to Marino Ballena National Park — the famous "whale tail" sandbar and prime humpback territory.</p></div></div>
-      <div class="loc-item"><div class="loc-num">∞</div><div class="loc-text"><h4>Wildlife, Every Day</h4><p>Monkeys swing through the canopy at breakfast. Toucans call from the trees. Pura Vida.</p></div></div>
+      <div class="loc-item"><div class="loc-num">∞</div><div class="loc-text"><h4>Wildlife, Every Day</h4><p>Monkeys swing through the canopy at breakfast. Toucans call from the trees. Puravida.</p></div></div>
     </div>
   </div>
 </section>
@@ -551,7 +551,8 @@ span.flatpickr-weekday{background:var(--charcoal);color:var(--mid);font-size:9px
 
 <footer>
   <div class="footer-logo">Casa Bali</div>
-  <div class="footer-copy">© 2025 Casa Bali · Dominicalito, Costa Rica · Pura Vida</div>
+  <div class="footer-copy">© <span id="copy-year"></span> Casa Bali · Dominicalito, Costa Rica · Puravida</div>
+  <script>document.getElementById('copy-year').textContent=new Date().getFullYear();</script>
 </footer>
 
 <script>
