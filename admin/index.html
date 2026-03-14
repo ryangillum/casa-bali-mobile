@@ -361,9 +361,13 @@ if(sessionStorage.getItem('cb_auth') === '1') showAdmin();
 // ─── CONFIG ───
 function loadConfig(){
   document.getElementById('cfg-owner').value  = localStorage.getItem('cb_owner')  || 'ryangillum';
-  document.getElementById('cfg-repo').value   = localStorage.getItem('cb_repo')   || 'casa-bali';
+  document.getElementById('cfg-repo').value   = localStorage.getItem('cb_repo')   || 'casa-bali-mobile';
   document.getElementById('cfg-branch').value = localStorage.getItem('cb_branch') || 'main';
   document.getElementById('cfg-token').value  = localStorage.getItem('cb_token')  || '';
+  // Always ensure owner/repo/branch are saved so they persist
+  if(!localStorage.getItem('cb_owner'))  localStorage.setItem('cb_owner',  'ryangillum');
+  if(!localStorage.getItem('cb_repo'))   localStorage.setItem('cb_repo',   'casa-bali-mobile');
+  if(!localStorage.getItem('cb_branch')) localStorage.setItem('cb_branch', 'main');
   updateInstructions();
 }
 
@@ -378,8 +382,8 @@ function saveConfig(){
 
 function getConfig(){
   return {
-    owner:  localStorage.getItem('cb_owner')  || '',
-    repo:   localStorage.getItem('cb_repo')   || '',
+    owner:  localStorage.getItem('cb_owner')  || 'ryangillum',
+    repo:   localStorage.getItem('cb_repo')   || 'casa-bali-mobile',
     branch: localStorage.getItem('cb_branch') || 'main',
     token:  localStorage.getItem('cb_token')  || '',
   };
