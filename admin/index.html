@@ -358,34 +358,46 @@ function showAdmin(){
 
 if(sessionStorage.getItem('cb_auth') === '1') showAdmin();
 
+// ─── COOKIE HELPERS (more persistent than localStorage on mobile Safari) ───
+function setCookie(name, value, days){
+  const exp = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)};expires=${exp};path=/;SameSite=Strict`;
+  try { localStorage.setItem(name, value); } catch(e){}
+}
+function getCookie(name){
+  const match = document.cookie.split('; ').find(r => r.startsWith(name + '='));
+  if(match) return decodeURIComponent(match.split('=')[1]);
+  try { return localStorage.getItem(name) || ''; } catch(e){ return ''; }
+}
+
 // ─── CONFIG ───
 function loadConfig(){
-  document.getElementById('cfg-owner').value  = localStorage.getItem('cb_owner')  || 'ryangillum';
-  document.getElementById('cfg-repo').value   = localStorage.getItem('cb_repo')   || 'casa-bali-mobile';
-  document.getElementById('cfg-branch').value = localStorage.getItem('cb_branch') || 'main';
-  document.getElementById('cfg-token').value  = localStorage.getItem('cb_token')  || '';
+  document.getElementById('cfg-owner').value  = getCookie('cb_owner')  || 'ryangillum';
+  document.getElementById('cfg-repo').value   = getCookie('cb_repo')   || 'casa-bali-mobile';
+  document.getElementById('cfg-branch').value = getCookie('cb_branch') || 'main';
+  document.getElementById('cfg-token').value  = getCookie('cb_token')  || '';
   // Always ensure owner/repo/branch are saved so they persist
-  if(!localStorage.getItem('cb_owner'))  localStorage.setItem('cb_owner',  'ryangillum');
-  if(!localStorage.getItem('cb_repo'))   localStorage.setItem('cb_repo',   'casa-bali-mobile');
-  if(!localStorage.getItem('cb_branch')) localStorage.setItem('cb_branch', 'main');
+  if(!getCookie('cb_owner'))  setCookie('cb_owner',  'ryangillum',      365);
+  if(!getCookie('cb_repo'))   setCookie('cb_repo',   'casa-bali-mobile',365);
+  if(!getCookie('cb_branch')) setCookie('cb_branch', 'main',            365);
   updateInstructions();
 }
 
 function saveConfig(){
-  localStorage.setItem('cb_owner',  document.getElementById('cfg-owner').value.trim());
-  localStorage.setItem('cb_repo',   document.getElementById('cfg-repo').value.trim());
-  localStorage.setItem('cb_branch', document.getElementById('cfg-branch').value.trim() || 'main');
-  localStorage.setItem('cb_token',  document.getElementById('cfg-token').value.trim());
+  setCookie('cb_owner',  document.getElementById('cfg-owner').value.trim(),                      365);
+  setCookie('cb_repo',   document.getElementById('cfg-repo').value.trim(),                       365);
+  setCookie('cb_branch', document.getElementById('cfg-branch').value.trim() || 'main',           365);
+  setCookie('cb_token',  document.getElementById('cfg-token').value.trim(),                      365);
   setStatus('Settings saved!', 'success');
   updateInstructions();
 }
 
 function getConfig(){
   return {
-    owner:  localStorage.getItem('cb_owner')  || 'ryangillum',
-    repo:   localStorage.getItem('cb_repo')   || 'casa-bali-mobile',
-    branch: localStorage.getItem('cb_branch') || 'main',
-    token:  localStorage.getItem('cb_token')  || '',
+    owner:  getCookie('cb_owner')  || 'ryangillum',
+    repo:   getCookie('cb_repo')   || 'casa-bali-mobile',
+    branch: getCookie('cb_branch') || 'main',
+    token:  getCookie('cb_token')  || '',
   };
 }
 
