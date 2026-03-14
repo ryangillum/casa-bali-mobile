@@ -261,6 +261,30 @@
       "category": "nature",
       "label": "IMG 8866",
       "file": "img_8866_1773439042553.jpg"
+    },
+    {
+      "id": "fullsizerender_1773451300448",
+      "category": "exterior",
+      "label": "FullSizeRender",
+      "file": "fullsizerender_1773451300448.jpg"
+    },
+    {
+      "id": "img_0451_1773451301901",
+      "category": "exterior",
+      "label": "IMG 0451",
+      "file": "img_0451_1773451301901.jpg"
+    },
+    {
+      "id": "img_0671_1773451303287",
+      "category": "exterior",
+      "label": "IMG 0671",
+      "file": "img_0671_1773451303287.jpg"
+    },
+    {
+      "id": "fullsizerender_1773451305350",
+      "category": "exterior",
+      "label": "FullSizeRender",
+      "file": "fullsizerender_1773451305350.jpg"
     }
   ]
 }
